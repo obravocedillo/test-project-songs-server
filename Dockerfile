@@ -16,6 +16,6 @@ RUN npm run build
 
 RUN chmod +x ./scripts/prisma-migration.sh
 
-EXPOSE 3000
+EXPOSE 3002
 
 ENTRYPOINT ["./scripts/prisma-migration.sh"]
