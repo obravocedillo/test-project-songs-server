@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express from "express";
-import { Loader } from "./loaders/index";
+import { Loader } from "./loaders";
 import { baseLogger } from "./services/logger/factory";
 
 const app = express();
