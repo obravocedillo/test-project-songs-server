@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "node"],
   },
   "exclude": ["./prisma.config.ts", "./vitest.config.ts"],
 }
