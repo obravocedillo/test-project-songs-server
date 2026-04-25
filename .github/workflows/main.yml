@@ -22,6 +22,15 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: obravocedillo/test-project-songs-server:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
       - name: Trigger Coolify Deployment
         run: |
           curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' \
