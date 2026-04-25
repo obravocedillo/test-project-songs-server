@@ -1,0 +1,5 @@
+model Artist {
+  id    Int    @id @default(autoincrement())
+  name  String
+  songs Song[]
+}

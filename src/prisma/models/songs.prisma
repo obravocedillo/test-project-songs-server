@@ -1,0 +1,8 @@
+model Song {
+  id       Int      @id @default(autoincrement())
+  title    String
+  duration Int
+  artist   Artist[]
+  genreId  Int?
+  genre    Genre?   @relation(fields: [genreId], references: [id])
+}
