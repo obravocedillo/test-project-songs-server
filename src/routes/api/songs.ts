@@ -8,4 +8,4 @@ songsRouter.get("/:id", songsController.execute.bind(songsController));
 songsRouter.get("/", songsController.execute.bind(songsController));
 songsRouter.post("/", songsController.execute.bind(songsController));
 songsRouter.put("/", songsController.execute.bind(songsController));
-songsRouter.delete("/", songsController.execute.bind(songsController));
+songsRouter.delete("/:id", songsController.execute.bind(songsController));

@@ -3,7 +3,11 @@ import { BaseRepository } from "../../repositories/base";
 import { BaseController } from "../base";
 import { ITypedRequest } from "../../types/reques";
 import { ITypedResponse } from "../../types/response";
-import { ERROR_CODE, SUCCESS_CODE } from "../../constants/responseCodes";
+import {
+  BAD_REQUEST_CODE,
+  ERROR_CODE,
+  SUCCESS_CODE,
+} from "../../constants/responseCodes";
 
 export abstract class BaseCrudController<
   TModel,
@@ -72,7 +76,13 @@ export abstract class BaseCrudController<
   ): Promise<ITypedResponse<string>> {
     const { id } = req.params;
 
-    await this.prismaModel.delete({ id });
+    if (!id) {
+      return res
+        .status(BAD_REQUEST_CODE)
+        .send({ success: false, error: "Invalid ID" });
+    }
+
+    await this.prismaModel.delete({ id: parseInt(id) });
 
     return res.status(SUCCESS_CODE).send({ success: true, data: "Success" });
   }
