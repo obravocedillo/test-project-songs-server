@@ -1,4 +1,4 @@
-import { Genre, Prisma } from "../generated/prisma/client";
+import { Genre, Prisma } from "../../generated/prisma/client";
 import { BaseRepository } from "./base";
 
 class GenreRepository extends BaseRepository<Genre, Prisma.GenreCreateInput> {

@@ -1,10 +1,14 @@
 import { Express } from "express";
 import { PrismaLoader } from "./prisma";
+import { ElasticSearchLoader } from "./elasticSearch";
 
 export class Loader {
   async execute(app: Express): Promise<void> {
     const prismaLoader = new PrismaLoader();
     await prismaLoader.execute();
+
+    const elasticSearchLoader = new ElasticSearchLoader();
+    await elasticSearchLoader.execute();
 
     // Put below other loaders to avoid loading models before initialization
     const { ExpressLoader } = await import("./express").catch((e) => {

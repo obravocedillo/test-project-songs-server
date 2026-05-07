@@ -1,4 +1,4 @@
-import { Artist, Prisma } from "../generated/prisma/client";
+import { Artist, Prisma } from "../../generated/prisma/client";
 import { BaseRepository } from "./base";
 
 class ArtistRepository extends BaseRepository<

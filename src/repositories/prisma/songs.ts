@@ -1,4 +1,4 @@
-import { Prisma, Song } from "../generated/prisma/client";
+import { Prisma, Song } from "../../generated/prisma/client";
 import { BaseRepository } from "./base";
 
 class SongRepository extends BaseRepository<Song, Prisma.SongCreateInput> {

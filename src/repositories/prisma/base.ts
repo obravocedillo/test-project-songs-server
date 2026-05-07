@@ -1,5 +1,5 @@
-import { Prisma } from "../generated/prisma/client";
-import { PrismaLoader } from "../loaders/prisma";
+import { Prisma } from "../../generated/prisma/client";
+import { PrismaLoader } from "../../loaders/prisma";
 
 interface IBaseRepository<T, TCreateInput> {
   findById(id: string): Promise<T>;

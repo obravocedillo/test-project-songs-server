@@ -1,6 +1,6 @@
 import { Song } from "../../generated/prisma/client";
 import { SongCreateInput } from "../../generated/prisma/models";
-import { songRepository } from "../../repositories/songs";
+import { songRepository } from "../../repositories/prisma/songs";
 import { BaseCrudController } from "./baseCrud";
 
 class SongsController extends BaseCrudController<Song, SongCreateInput> {}
