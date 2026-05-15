@@ -1,12 +1,12 @@
 import { BaseSearchRepository } from "./base";
 
-interface ISongsSearchRepository {
+export interface ISongsSearch {
   title: string;
-  artistId: number;
-  genreId: number;
+  artistId: number | null;
+  genreId: number | null;
 }
 
-class SongsSearchRepository extends BaseSearchRepository<ISongsSearchRepository> {
+class SongsSearchRepository extends BaseSearchRepository<ISongsSearch> {
   constructor() {
     super("song", {
       properties: {

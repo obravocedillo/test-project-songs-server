@@ -29,12 +29,14 @@ export type AggregateSong = {
 export type SongAvgAggregateOutputType = {
   id: number | null
   duration: number | null
+  artistId: number | null
   genreId: number | null
 }
 
 export type SongSumAggregateOutputType = {
   id: number | null
   duration: number | null
+  artistId: number | null
   genreId: number | null
 }
 
@@ -42,6 +44,7 @@ export type SongMinAggregateOutputType = {
   id: number | null
   title: string | null
   duration: number | null
+  artistId: number | null
   genreId: number | null
 }
 
@@ -49,6 +52,7 @@ export type SongMaxAggregateOutputType = {
   id: number | null
   title: string | null
   duration: number | null
+  artistId: number | null
   genreId: number | null
 }
 
@@ -56,6 +60,7 @@ export type SongCountAggregateOutputType = {
   id: number
   title: number
   duration: number
+  artistId: number
   genreId: number
   _all: number
 }
@@ -64,12 +69,14 @@ export type SongCountAggregateOutputType = {
 export type SongAvgAggregateInputType = {
   id?: true
   duration?: true
+  artistId?: true
   genreId?: true
 }
 
 export type SongSumAggregateInputType = {
   id?: true
   duration?: true
+  artistId?: true
   genreId?: true
 }
 
@@ -77,6 +84,7 @@ export type SongMinAggregateInputType = {
   id?: true
   title?: true
   duration?: true
+  artistId?: true
   genreId?: true
 }
 
@@ -84,6 +92,7 @@ export type SongMaxAggregateInputType = {
   id?: true
   title?: true
   duration?: true
+  artistId?: true
   genreId?: true
 }
 
@@ -91,6 +100,7 @@ export type SongCountAggregateInputType = {
   id?: true
   title?: true
   duration?: true
+  artistId?: true
   genreId?: true
   _all?: true
 }
@@ -185,6 +195,7 @@ export type SongGroupByOutputType = {
   id: number
   title: string
   duration: number
+  artistId: number | null
   genreId: number | null
   _count: SongCountAggregateOutputType | null
   _avg: SongAvgAggregateOutputType | null
@@ -215,6 +226,7 @@ export type SongWhereInput = {
   id?: Prisma.IntFilter<"Song"> | number
   title?: Prisma.StringFilter<"Song"> | string
   duration?: Prisma.IntFilter<"Song"> | number
+  artistId?: Prisma.IntNullableFilter<"Song"> | number | null
   genreId?: Prisma.IntNullableFilter<"Song"> | number | null
   artist?: Prisma.ArtistListRelationFilter
   genre?: Prisma.XOR<Prisma.GenreNullableScalarRelationFilter, Prisma.GenreWhereInput> | null
@@ -224,6 +236,7 @@ export type SongOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  artistId?: Prisma.SortOrderInput | Prisma.SortOrder
   genreId?: Prisma.SortOrderInput | Prisma.SortOrder
   artist?: Prisma.ArtistOrderByRelationAggregateInput
   genre?: Prisma.GenreOrderByWithRelationInput
@@ -236,6 +249,7 @@ export type SongWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SongWhereInput | Prisma.SongWhereInput[]
   title?: Prisma.StringFilter<"Song"> | string
   duration?: Prisma.IntFilter<"Song"> | number
+  artistId?: Prisma.IntNullableFilter<"Song"> | number | null
   genreId?: Prisma.IntNullableFilter<"Song"> | number | null
   artist?: Prisma.ArtistListRelationFilter
   genre?: Prisma.XOR<Prisma.GenreNullableScalarRelationFilter, Prisma.GenreWhereInput> | null
@@ -245,6 +259,7 @@ export type SongOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  artistId?: Prisma.SortOrderInput | Prisma.SortOrder
   genreId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SongCountOrderByAggregateInput
   _avg?: Prisma.SongAvgOrderByAggregateInput
@@ -260,12 +275,14 @@ export type SongScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Song"> | number
   title?: Prisma.StringWithAggregatesFilter<"Song"> | string
   duration?: Prisma.IntWithAggregatesFilter<"Song"> | number
+  artistId?: Prisma.IntNullableWithAggregatesFilter<"Song"> | number | null
   genreId?: Prisma.IntNullableWithAggregatesFilter<"Song"> | number | null
 }
 
 export type SongCreateInput = {
   title: string
   duration: number
+  artistId?: number | null
   artist?: Prisma.ArtistCreateNestedManyWithoutSongsInput
   genre?: Prisma.GenreCreateNestedOneWithoutSongsInput
 }
@@ -274,6 +291,7 @@ export type SongUncheckedCreateInput = {
   id?: number
   title: string
   duration: number
+  artistId?: number | null
   genreId?: number | null
   artist?: Prisma.ArtistUncheckedCreateNestedManyWithoutSongsInput
 }
@@ -281,6 +299,7 @@ export type SongUncheckedCreateInput = {
 export type SongUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   artist?: Prisma.ArtistUpdateManyWithoutSongsNestedInput
   genre?: Prisma.GenreUpdateOneWithoutSongsNestedInput
 }
@@ -289,6 +308,7 @@ export type SongUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   genreId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   artist?: Prisma.ArtistUncheckedUpdateManyWithoutSongsNestedInput
 }
@@ -297,18 +317,21 @@ export type SongCreateManyInput = {
   id?: number
   title: string
   duration: number
+  artistId?: number | null
   genreId?: number | null
 }
 
 export type SongUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type SongUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   genreId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -326,12 +349,14 @@ export type SongCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  artistId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
 }
 
 export type SongAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  artistId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
 }
 
@@ -339,6 +364,7 @@ export type SongMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  artistId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
 }
 
@@ -346,12 +372,14 @@ export type SongMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  artistId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
 }
 
 export type SongSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  artistId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
 }
 
@@ -446,6 +474,7 @@ export type NullableIntFieldUpdateOperationsInput = {
 export type SongCreateWithoutArtistInput = {
   title: string
   duration: number
+  artistId?: number | null
   genre?: Prisma.GenreCreateNestedOneWithoutSongsInput
 }
 
@@ -453,6 +482,7 @@ export type SongUncheckedCreateWithoutArtistInput = {
   id?: number
   title: string
   duration: number
+  artistId?: number | null
   genreId?: number | null
 }
 
@@ -484,12 +514,14 @@ export type SongScalarWhereInput = {
   id?: Prisma.IntFilter<"Song"> | number
   title?: Prisma.StringFilter<"Song"> | string
   duration?: Prisma.IntFilter<"Song"> | number
+  artistId?: Prisma.IntNullableFilter<"Song"> | number | null
   genreId?: Prisma.IntNullableFilter<"Song"> | number | null
 }
 
 export type SongCreateWithoutGenreInput = {
   title: string
   duration: number
+  artistId?: number | null
   artist?: Prisma.ArtistCreateNestedManyWithoutSongsInput
 }
 
@@ -497,6 +529,7 @@ export type SongUncheckedCreateWithoutGenreInput = {
   id?: number
   title: string
   duration: number
+  artistId?: number | null
   artist?: Prisma.ArtistUncheckedCreateNestedManyWithoutSongsInput
 }
 
@@ -529,6 +562,7 @@ export type SongUpdateManyWithWhereWithoutGenreInput = {
 export type SongUpdateWithoutArtistInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   genre?: Prisma.GenreUpdateOneWithoutSongsNestedInput
 }
 
@@ -536,6 +570,7 @@ export type SongUncheckedUpdateWithoutArtistInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   genreId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -543,6 +578,7 @@ export type SongUncheckedUpdateManyWithoutArtistInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   genreId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -550,11 +586,13 @@ export type SongCreateManyGenreInput = {
   id?: number
   title: string
   duration: number
+  artistId?: number | null
 }
 
 export type SongUpdateWithoutGenreInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   artist?: Prisma.ArtistUpdateManyWithoutSongsNestedInput
 }
 
@@ -562,6 +600,7 @@ export type SongUncheckedUpdateWithoutGenreInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   artist?: Prisma.ArtistUncheckedUpdateManyWithoutSongsNestedInput
 }
 
@@ -569,6 +608,7 @@ export type SongUncheckedUpdateManyWithoutGenreInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  artistId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -606,6 +646,7 @@ export type SongSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   title?: boolean
   duration?: boolean
+  artistId?: boolean
   genreId?: boolean
   artist?: boolean | Prisma.Song$artistArgs<ExtArgs>
   genre?: boolean | Prisma.Song$genreArgs<ExtArgs>
@@ -616,6 +657,7 @@ export type SongSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   title?: boolean
   duration?: boolean
+  artistId?: boolean
   genreId?: boolean
   genre?: boolean | Prisma.Song$genreArgs<ExtArgs>
 }, ExtArgs["result"]["song"]>
@@ -624,6 +666,7 @@ export type SongSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   title?: boolean
   duration?: boolean
+  artistId?: boolean
   genreId?: boolean
   genre?: boolean | Prisma.Song$genreArgs<ExtArgs>
 }, ExtArgs["result"]["song"]>
@@ -632,10 +675,11 @@ export type SongSelectScalar = {
   id?: boolean
   title?: boolean
   duration?: boolean
+  artistId?: boolean
   genreId?: boolean
 }
 
-export type SongOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "duration" | "genreId", ExtArgs["result"]["song"]>
+export type SongOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "duration" | "artistId" | "genreId", ExtArgs["result"]["song"]>
 export type SongInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   artist?: boolean | Prisma.Song$artistArgs<ExtArgs>
   genre?: boolean | Prisma.Song$genreArgs<ExtArgs>
@@ -658,6 +702,7 @@ export type $SongPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: number
     title: string
     duration: number
+    artistId: number | null
     genreId: number | null
   }, ExtArgs["result"]["song"]>
   composites: {}
@@ -1087,6 +1132,7 @@ export interface SongFieldRefs {
   readonly id: Prisma.FieldRef<"Song", 'Int'>
   readonly title: Prisma.FieldRef<"Song", 'String'>
   readonly duration: Prisma.FieldRef<"Song", 'Int'>
+  readonly artistId: Prisma.FieldRef<"Song", 'Int'>
   readonly genreId: Prisma.FieldRef<"Song", 'Int'>
 }
     

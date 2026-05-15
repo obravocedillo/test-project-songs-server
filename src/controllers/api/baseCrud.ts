@@ -32,6 +32,28 @@ export abstract class BaseCrudController<
     }
   }
 
+  async search(
+    req: ITypedRequest<null, { key: keyof TSearchModel; search: string }>,
+    res: ITypedResponse<TSearchModel[]>,
+  ): Promise<ITypedResponse<TSearchModel[]>> {
+    if (!this.searchModel) {
+      return res
+        .status(BAD_REQUEST_CODE)
+        .send({ success: false, error: "Search not available" });
+    }
+
+    const { key, search } = req.query;
+    const records = await this.searchModel?.find({
+      fuzzy: {
+        [key]: {
+          value: search,
+        },
+      },
+    });
+
+    return res.status(SUCCESS_CODE).json({ success: true, data: records });
+  }
+
   async getAll(
     req: ITypedRequest,
     res: ITypedResponse<TModel[]>,
@@ -134,7 +156,13 @@ export abstract class BaseCrudController<
     const {
       method,
       params: { id },
+      query: { key, search },
     } = req;
+
+    if (method === "GET" && key && search) {
+      await this.search(req, res);
+      return;
+    }
 
     if (method === "GET" && id) {
       await this.getById(req, res);

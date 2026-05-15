@@ -1,12 +1,10 @@
 import { BaseSearchRepository } from "./base";
 
-interface IGenreSearchRepository {
-  title: string;
-  artistId: number;
-  genreId: number;
+export interface IArtistSearch {
+  name: string;
 }
 
-class ArtistSearchRepository extends BaseSearchRepository<IGenreSearchRepository> {
+class ArtistSearchRepository extends BaseSearchRepository<IArtistSearch> {
   constructor() {
     super("artist", {
       properties: {

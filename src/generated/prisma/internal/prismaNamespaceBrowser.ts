@@ -92,6 +92,7 @@ export const SongScalarFieldEnum = {
   id: 'id',
   title: 'title',
   duration: 'duration',
+  artistId: 'artistId',
   genreId: 'genreId'
 } as const
 
