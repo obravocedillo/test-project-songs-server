@@ -1,5 +1,6 @@
 import { Genre } from "../../generated/prisma/client";
 import { GenreCreateInput } from "../../generated/prisma/models";
+import { ElasticSearchQueuesLoader } from "../../loaders/elasticSearchQueues";
 import {
   genreSearchRepository,
   IGenreSearch,
@@ -23,4 +24,5 @@ export const genreController = new GenreController(
   genreRepository,
   "GenreController",
   genreSearchRepository,
+  ElasticSearchQueuesLoader.genreQueue,
 );

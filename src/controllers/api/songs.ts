@@ -1,5 +1,6 @@
 import { Song } from "../../generated/prisma/client";
 import { SongCreateInput } from "../../generated/prisma/models";
+import { ElasticSearchQueuesLoader } from "../../loaders/elasticSearchQueues";
 import {
   ISongsSearch,
   songsSearchRepository,
@@ -25,4 +26,5 @@ export const songsController = new SongsController(
   songRepository,
   "SongsController",
   songsSearchRepository,
+  ElasticSearchQueuesLoader.songQueue,
 );

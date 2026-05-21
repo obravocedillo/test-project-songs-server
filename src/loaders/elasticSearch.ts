@@ -1,5 +1,9 @@
 import { BaseLoader } from "./base";
 import { Client } from "@elastic/elasticsearch";
+import { elasticSearchConfig } from "../config/elasticSearch";
+
+const { ELASTICSEARCH_URL, ELASTICSEARCH_USER, ELASTICSEARCH_PASSWORD } =
+  elasticSearchConfig;
 
 export class ElasticSearchLoader extends BaseLoader {
   static elasticSearchInstance: Client;
@@ -10,10 +14,10 @@ export class ElasticSearchLoader extends BaseLoader {
 
   protected async load(): Promise<Client> {
     const elasticSearchClient = new Client({
-      node: process.env.ELASTICSEARCH_URL || "",
+      node: ELASTICSEARCH_URL,
       auth: {
-        username: process.env.ES_USER || "",
-        password: process.env.ES_PASSWORD || "",
+        username: ELASTICSEARCH_USER,
+        password: ELASTICSEARCH_PASSWORD,
       },
     });
 

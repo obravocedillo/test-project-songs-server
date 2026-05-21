@@ -9,6 +9,7 @@ import {
   SUCCESS_CODE,
 } from "../../constants/responseCodes";
 import { BaseSearchRepository } from "../../repositories/elasticSearch/base";
+import { ElasticSearchQueueService } from "../../services/queue/elasticSearchQueue";
 
 export abstract class BaseCrudController<
   TModel extends { id: number },
@@ -18,17 +19,23 @@ export abstract class BaseCrudController<
   protected prismaModel: BaseRepository<TModel, TCreateInput>;
   protected searchModel?: BaseSearchRepository<TSearchModel>;
   protected toSearchModel?(model: TModel): TSearchModel;
+  protected elasticSearchQueueService?: ElasticSearchQueueService<TSearchModel>;
 
   constructor(
     prismaModel: BaseRepository<TModel, TCreateInput>,
     controllerName: string,
     searchModel?: BaseSearchRepository<TSearchModel>,
+    elasticSearchQueueService?: ElasticSearchQueueService<TSearchModel>,
   ) {
     super(controllerName);
     this.prismaModel = prismaModel;
 
     if (searchModel) {
       this.searchModel = searchModel;
+    }
+
+    if (elasticSearchQueueService) {
+      this.elasticSearchQueueService = elasticSearchQueueService;
     }
   }
 
@@ -82,15 +89,12 @@ export abstract class BaseCrudController<
 
     const getResult = await this.prismaModel.create(objectInformation);
 
-    if (this.searchModel && this.toSearchModel) {
-      try {
-        const searchDocument = this.toSearchModel(getResult);
-        await this.searchModel.create(String(getResult.id), searchDocument);
-      } catch (error) {
-        this.controllerLogger.error("ES sync failed", {
-          error: error instanceof Error ? error.message : String(error),
-        });
-      }
+    if (this.toSearchModel && this.elasticSearchQueueService) {
+      const searchDocument = this.toSearchModel(getResult);
+      this.elasticSearchQueueService.publish(
+        `elasticsearch-${this.elasticSearchQueueService.queuePrefix}-save`,
+        { id: String(getResult.id), document: searchDocument },
+      );
     }
 
     return res.status(SUCCESS_CODE).send({ success: true, data: getResult });
@@ -107,15 +111,12 @@ export abstract class BaseCrudController<
       objectInformation,
     );
 
-    if (this.searchModel && this.toSearchModel) {
-      try {
-        const searchDocument = this.toSearchModel(getResult);
-        await this.searchModel.update(String(getResult.id), searchDocument);
-      } catch (error) {
-        this.controllerLogger.error("ES sync failed", {
-          error: error instanceof Error ? error.message : String(error),
-        });
-      }
+    if (this.toSearchModel && this.elasticSearchQueueService) {
+      const searchDocument = this.toSearchModel(getResult);
+      this.elasticSearchQueueService.publish(
+        `elasticsearch-${this.elasticSearchQueueService.queuePrefix}-update`,
+        { id: String(getResult.id), document: searchDocument },
+      );
     }
 
     return res.status(SUCCESS_CODE).send({ success: true, data: getResult });
@@ -135,14 +136,11 @@ export abstract class BaseCrudController<
 
     await this.prismaModel.delete({ id: parseInt(id) });
 
-    if (this.searchModel && this.toSearchModel) {
-      try {
-        await this.searchModel.delete(String(id));
-      } catch (error) {
-        this.controllerLogger.error("ES sync failed", {
-          error: error instanceof Error ? error.message : String(error),
-        });
-      }
+    if (this.toSearchModel && this.elasticSearchQueueService) {
+      this.elasticSearchQueueService.publish(
+        `elasticsearch-${this.elasticSearchQueueService.queuePrefix}-delete`,
+        { id: String(id) },
+      );
     }
 
     return res.status(SUCCESS_CODE).send({ success: true, data: "Success" });

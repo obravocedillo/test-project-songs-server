@@ -6,6 +6,7 @@ import {
   IArtistSearch,
 } from "../../repositories/elasticSearch/artist";
 import { BaseCrudController } from "./baseCrud";
+import { ElasticSearchQueuesLoader } from "../../loaders/elasticSearchQueues";
 
 class ArtistController extends BaseCrudController<
   Artist,
@@ -23,4 +24,5 @@ export const artistController = new ArtistController(
   artistRepository,
   "ArtistController",
   artistSearchRepository,
+  ElasticSearchQueuesLoader.artistQueue,
 );
