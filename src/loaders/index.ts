@@ -1,7 +1,6 @@
 import { Express } from "express";
 import { PrismaLoader } from "./prisma";
 import { ElasticSearchLoader } from "./elasticSearch";
-import { ElasticSearchQueuesLoader } from "./elasticSearchQueues";
 import { QueuesLoader } from "./queue";
 
 export class Loader {
@@ -15,7 +14,13 @@ export class Loader {
     const queuesLoader = new QueuesLoader();
     await queuesLoader.execute();
 
+    // Avoid intialization of search queue until loaders are done
+    const { ElasticSearchQueuesLoader } =
+      await import("./elasticSearchQueues").catch((e) => {
+        throw new Error(`Failed to import ElasticSearchQueuesLoader: ${e}`);
+      });
     const elasticSearchQueuesLoader = new ElasticSearchQueuesLoader();
+
     await elasticSearchQueuesLoader.execute();
 
     // Avoid intialization of express until loaders are done
