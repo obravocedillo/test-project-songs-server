@@ -16,6 +16,7 @@ This is a practice project showcasing the use of different technologies, followi
 - Repository pattern — Handles operation done on Prisma and Elasticsearch models. Extends base repositories with shared functions like find, save, update and delete but each repository can extends to include custom functionality
 - Base CRUD controller — Generic controller that handles CRUD operation across different database models. New models extend base controller in order to allow CRUD operation without duplicating code, but functions can be overwritten to allow for custom logic
 - Queue pattern — Async Elasticsearch sync via RabbitMQ, this decouples the operations on elasticsearch from the database. In case the service is down database operations are not affected which are essential for the correct functionality of the server
+- CI/CD pipeline builds a Docker image and deploys automatically to a VPS via Coolify webhook, with Cloudflare in front for security
 
 ## Project Structure
 
