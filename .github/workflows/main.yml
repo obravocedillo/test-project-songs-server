@@ -32,7 +32,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Trigger Coolify Deployment
+      - name: Trigger Dokploy Deployment
         run: |
-          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' \
-               --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
+          curl --request GET '${{ secrets.DOKPLOY_WEBHOOK }}'
